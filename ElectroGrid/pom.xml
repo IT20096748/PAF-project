@@ -21,7 +21,7 @@
     </plugins>
   </build>
   
-   <dependencies>
+  <dependencies>
   
   	<!-- Dependency for JAX-RS -->
   	<dependency>
