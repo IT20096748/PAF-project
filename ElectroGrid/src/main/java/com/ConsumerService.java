@@ -52,4 +52,33 @@ public class ConsumerService {
 		String output = consumerObj.insertConsumer(accountNo,firstName,lastName,gender,occupation,phoneNumber,email,password,province,city,street,postalCode);
 		return output;
 	}
+	@PUT
+	@Path("/")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.TEXT_PLAIN)
+	public String updateConsumer(String consumerData)
+	{
+		//Convert the input string to a JSON object
+		JsonObject consumerObject = new JsonParser().parse(consumerData).getAsJsonObject();
+		
+		//Read the values from the JSON object
+		String consumerNo= consumerObject.get("consumerNo").getAsString();
+		String accountNo = consumerObject.get("accountNo").getAsString();
+		String firstName= consumerObject.get("firstName").getAsString();
+		String lastName = consumerObject.get("lastName").getAsString();
+		String gender = consumerObject.get("gender").getAsString();
+		String occupation = consumerObject.get("occupation").getAsString();
+		String phoneNumber= consumerObject.get("phoneNumber").getAsString();
+		String email = consumerObject.get("email").getAsString();
+		String password = consumerObject.get("password").getAsString();
+		String province = consumerObject.get("province").getAsString();
+		String city = consumerObject.get("city").getAsString();
+		String street = consumerObject.get("street").getAsString();
+		String postalCode = consumerObject.get("postalCode").getAsString();
+		
+		String output = consumerObj.updateConsumer(consumerNo, accountNo, firstName, lastName, gender, occupation, phoneNumber, email, password, province, city, street, postalCode);
+		return output;
+		
+	
+	}
 }
