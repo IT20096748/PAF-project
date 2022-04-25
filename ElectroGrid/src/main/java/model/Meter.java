@@ -146,4 +146,39 @@ Connection con = null;
 		
 		return output;
 	}
+	
+	//delete meter
+	public String deleteMeter(String meterID)
+	{
+		String output = "";
+		
+		try
+		{
+			con = DBconfig.getConnection();;
+			
+			if (con == null)
+			{return "Error while connecting to the database for deleting."; }
+			
+			// create a prepared statement
+			String query = "delete from Meter where meterID=?";
+			
+			PreparedStatement preparedStmt = con.prepareStatement(query);
+			
+			// binding values
+			preparedStmt.setInt(1, Integer.parseInt(meterID));
+			
+			// execute the statement
+			preparedStmt.execute();
+			con.close();
+			
+			output = "Deleted successfully";
+		}
+		catch (Exception e)
+		{
+			output = "Error while deleting the item.";
+			System.err.println(e.getMessage());
+		}
+		
+		return output;
+	}
 }
