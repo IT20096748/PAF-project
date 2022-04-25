@@ -210,5 +210,38 @@ public String updateConsumer(String consumerNo,String accountNo ,String firstNam
 	
 	return output;
 }
+public String deleteConsumer(String accountNo)
+{
+	String output = "";
+	
+	try
+	{
+		Connection con = connect();
+		
+		if (con == null)
+		{return "Error while connecting to the database for deleting."; }
+		
+		// create a prepared statement
+		String query = "delete from consumer where accountNo=?";
+		
+		PreparedStatement preparedStmt = con.prepareStatement(query);
+		
+		// binding values
+		preparedStmt.setInt(1, Integer.parseInt(accountNo));
+		
+		// execute the statement
+		preparedStmt.execute();
+		con.close();
+		
+		output = "Deleted successfully";
+	}
+	catch (Exception e)
+	{
+		output = "Error while deleting the Consumer.";
+		System.err.println(e.getMessage());
+	}
+	
+	return output;
+}
 
 }
