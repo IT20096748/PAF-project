@@ -107,4 +107,43 @@ Connection con = null;
 		
 		return output;
 	}
+	
+	//update meter delails
+	public String updateMeter(String meterID, String meterCode, String premisesID, String electricityAccountNo, String manufactureDate)
+	{
+		String output = "";
+		
+		try
+		{
+			con = DBconfig.getConnection();
+			
+			if (con == null)
+			{return "Error while connecting to the database for updating."; }
+			
+			// create a prepared statement
+			String query = "UPDATE Meter SET meterCode=?,premisesID=?,electricityAccountNo=?,manufactureDate=? WHERE meterID=?";
+			
+			PreparedStatement preparedStmt = con.prepareStatement(query);
+			
+			// binding values
+			preparedStmt.setString(1, meterCode);
+			preparedStmt.setString(2, premisesID);
+			preparedStmt.setInt(3, Integer.parseInt(electricityAccountNo));
+			preparedStmt.setString(4, manufactureDate);
+			preparedStmt.setInt(5, Integer.parseInt(meterID));
+			
+			// execute the statement
+			preparedStmt.execute();
+			con.close();
+			
+			output = "Updated successfully";
+		}
+		catch (Exception e)
+		{
+			output = "Error while updating the meter.";
+			System.err.println(e.getMessage());
+		}
+		
+		return output;
+	}
 }
