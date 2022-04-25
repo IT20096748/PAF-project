@@ -165,4 +165,50 @@ public String readConsumers()
 	
 	
 }
+public String updateConsumer(String consumerNo,String accountNo ,String firstName, String lastName,String gender,String occupation, String phoneNumber, String email, String password, String province , String city , String street, String postalCode )
+{
+	String output = "";
+	
+	try
+	{
+		Connection con = connect();
+		
+		if (con == null)
+		{return "Error while connecting to the database for updating."; }
+		
+		// create a prepared statement
+		String query = "UPDATE consumer SET accountNo=?,firstName=?,lastName=?,gender=?,occupation=?,phoneNumber=?,email=?,Password=?,province=?,city=?,street=?,postalCode=? WHERE consumerNo=?";
+		
+		PreparedStatement preparedStmt = con.prepareStatement(query);
+		
+		// binding values
+		preparedStmt.setInt(1,Integer.parseInt(accountNo));
+		preparedStmt.setString(2, firstName);
+		preparedStmt.setString(3, lastName);
+		preparedStmt.setString(4, gender);
+		preparedStmt.setString(5, occupation);
+		preparedStmt.setString(6, phoneNumber);
+		preparedStmt.setString(7, email);
+		preparedStmt.setString(8, password);
+		preparedStmt.setString(9, province);
+		preparedStmt.setString(10, city);
+		preparedStmt.setString(11, street);
+		preparedStmt.setInt(12, Integer.parseInt(postalCode));
+		preparedStmt.setInt(13, Integer.parseInt(consumerNo));
+		
+		// execute the statement
+		preparedStmt.execute();
+		con.close();
+		
+		output = "Updated successfully";
+	}
+	catch (Exception e)
+	{
+		output = "Error while updating the Consumer.";
+		System.err.println(e.getMessage());
+	}
+	
+	return output;
+}
+
 }
