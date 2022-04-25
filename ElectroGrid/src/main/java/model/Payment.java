@@ -105,4 +105,66 @@ Connection con = null;
 		return output;
 	}
 
+	//view one payment record
+	public String readPayment(String ID)
+	{
+		String output = "";
+		
+		try
+		{
+				con = DBconfig.getConnection();
+				
+				if (con == null)
+				{return "Error while connecting to the database for reading."; }
+	
+				// Prepare the html table to be displayed
+				output = "<table border='1'><tr><th>Payment ID</th><th>Electricity Account No</th>" +
+						"<th>Bill ID</th>" +
+						"<th>Payment Date</th>" +
+						"<th>Payment Amount</th>" +
+						"</tr>";
+				
+				// create a prepared statement
+				String query = "select * from Payment WHERE billID=?";
+				
+				PreparedStatement preparedStmt = con.prepareStatement(query);
+				
+				// binding values
+				preparedStmt.setInt(1, Integer.parseInt(ID));
+				
+				// execute the statement
+				ResultSet rs = preparedStmt.executeQuery();
+				
+				
+				// iterate through the rows in the result set
+				while (rs.next())
+				{
+					String paymentID = rs.getString("paymentID");
+					String electricityAccountNo = Integer.toString(rs.getInt("electricityAccountNo"));
+					String billID = Integer.toString(rs.getInt("billID"));
+					String paymentDate = rs.getString("paymentDateTime");
+					String paymentAmount = Double.toString(rs.getDouble("paymentAmount"));
+					
+					// Add into the html table
+					output += "<tr><td>" + paymentID + "</td>";
+					output += "<td>" + electricityAccountNo + "</td>";
+					output += "<td>" + billID + "</td>";
+					output += "<td>" + paymentDate + "</td>";
+					output += "<td>" + paymentAmount + "</td></tr>";
+				}
+				
+				con.close();
+				
+				// Complete the html table
+				output += "</table>";
+		}
+		catch (Exception e)
+		{
+			output = "Error while reading the payment.";
+			System.err.println(e.getMessage());
+		}
+		
+		return output;
+	}
+	
 }
