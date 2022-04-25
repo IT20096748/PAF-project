@@ -80,4 +80,21 @@ public class EmployeeService {
 		
 	
 	}
+	@DELETE
+	@Path("/")
+	@Consumes(MediaType.APPLICATION_XML)
+	@Produces(MediaType.TEXT_PLAIN)
+	public String deleteEmployee(String employeeData)
+	{
+		//Convert the input string to an XML document
+		Document doc = Jsoup.parse(employeeData, "", Parser.xmlParser());
+		
+		//Read the value from the element <empID>
+		String empID = doc.select("empID").text();
+		
+		String output = employeeObj.deleteEmployee(empID);
+		
+		return output;
+	}
+
 }
