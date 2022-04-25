@@ -47,4 +47,64 @@ Connection con = null;
 		return output;
 	}
 
+	//view meter list
+	public String readMeters()
+	{
+		String output = "";
+		
+		try
+		{
+				con = DBconfig.getConnection();
+				
+				if (con == null)
+				{return "Error while connecting to the database for reading."; }
+	
+				// Prepare the html table to be displayed
+				output = "<table border='1'><tr><th>Meter Code</th><th>Premises ID</th>" +
+						"<th>Electricity Account No</th>" +
+						"<th>Manufacture Date</th>" +
+						"<th>Update</th><th>Remove</th></tr>";
+				
+				String query = "select * from Meter";
+				Statement stmt = con.createStatement();
+				ResultSet rs = stmt.executeQuery(query);
+				// iterate through the rows in the result set
+				while (rs.next())
+				{
+					String meterID = Integer.toString(rs.getInt("meterID"));
+					String meterCode = rs.getString("meterCode");
+					String premisesID = rs.getString("premisesID");
+					String electricityAccountNo = Integer.toString(rs.getInt("electricityAccountNo"));
+					String manufactureDate = rs.getString("manufactureDate");
+					
+					// Add into the html table
+					output += "<tr><td>" + meterCode + "</td>";
+					output += "<td>" + premisesID + "</td>";
+					output += "<td>" + electricityAccountNo + "</td>";
+					output += "<td>" + manufactureDate + "</td>";
+	
+					// buttons
+					output += "<td><form method='post' action='items.jsp'>" 
+							+ "<input name='btnUpdate' type='submit' value='Update' class='btn btn-secondary'>"
+							+ "<input name='itemID' type='hidden' value='" + meterID
+							+ "'>" + "</form></td>"
+							+ "<td><form method='post' action='items.jsp'>" 
+							+ "<input name='btnRemove' type='submit' value='Remove' class='btn btn-danger'>"
+							+ "<input name='itemID' type='hidden' value='" + meterID
+							+ "'>" + "</form></td></tr>";
+				}
+				
+				con.close();
+				
+				// Complete the html table
+				output += "</table>";
+		}
+		catch (Exception e)
+		{
+			output = "Error while reading the items.";
+			System.err.println(e.getMessage());
+		}
+		
+		return output;
+	}
 }
