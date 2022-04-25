@@ -32,4 +32,24 @@ public class ConsumerService {
 
 		return consumerObj.readConsumers();
 	}
+	@POST
+	@Path("/")
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	@Produces(MediaType.TEXT_PLAIN)
+	public String insertConsumer(@FormParam("accountNo") String accountNo,
+							 @FormParam("firstName") String firstName,
+							 @FormParam("lastName") String lastName,
+							 @FormParam("gender") String gender,
+							 @FormParam("occupation") String occupation,
+							 @FormParam("phoneNumber") String phoneNumber,
+							 @FormParam("email") String email,
+							 @FormParam("password") String password,
+							 @FormParam("province") String province,
+							 @FormParam("city") String city ,
+							 @FormParam("street") String street,
+							 @FormParam("postalCode") String postalCode)
+	{
+		String output = consumerObj.insertConsumer(accountNo,firstName,lastName,gender,occupation,phoneNumber,email,password,province,city,street,postalCode);
+		return output;
+	}
 }
