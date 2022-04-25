@@ -51,4 +51,33 @@ public class EmployeeService {
 		String output = employeeObj.insertEmployee(empID,firstName,lastName,gender,jobTitle,phoneNumber,email,password,province,city,street,postalCode);
 		return output;
 	}
+	@PUT
+	@Path("/")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.TEXT_PLAIN)
+	public String updateEmployee(String employeeData)
+	{
+		//Convert the input string to a JSON object
+		JsonObject employeeObject = new JsonParser().parse(employeeData).getAsJsonObject();
+		
+		//Read the values from the JSON object
+		String empNo= employeeObject.get("empNo").getAsString();
+		String empID = employeeObject.get("empID").getAsString();
+		String firstName= employeeObject.get("firstName").getAsString();
+		String lastName = employeeObject.get("lastName").getAsString();
+		String gender = employeeObject.get("gender").getAsString();
+		String jobTitle = employeeObject.get("jobTitle").getAsString();
+		String phoneNumber= employeeObject.get("phoneNumber").getAsString();
+		String email = employeeObject.get("email").getAsString();
+		String password = employeeObject.get("password").getAsString();
+		String province = employeeObject.get("province").getAsString();
+		String city = employeeObject.get("city").getAsString();
+		String street = employeeObject.get("street").getAsString();
+		String postalCode = employeeObject.get("postalCode").getAsString();
+		
+		String output = employeeObj.updateEmployee(empNo,empID,firstName,lastName,gender,jobTitle,phoneNumber,email,password,province,city,street,postalCode);
+		return output;
+		
+	
+	}
 }
