@@ -63,6 +63,22 @@ Complaint cObj = new Complaint();
 		
 		return output;
 	}
+	@DELETE
+	@Path("/")
+	@Consumes(MediaType.APPLICATION_XML)
+	@Produces(MediaType.TEXT_PLAIN)
+	public String delete(String complaintData)
+	{
+		//Convert the input string to an XML document
+		Document doc = Jsoup.parse(complaintData, "", Parser.xmlParser());
+		
+		//Read the value from the element <cID>
+		String cID = doc.select("cID").text();
+		
+		String output = cObj.deleteComplaint(cID);
+		
+		return output;
+	}
 
 	
 	
