@@ -254,4 +254,39 @@ public class ElectricityBill {
 		
 		return output;
 	}
+	
+	//delete bill
+	public String deleteBill(String billID)
+	{
+		String output = "";
+		
+		try
+		{
+			con = DBconfig.getConnection();;
+			
+			if (con == null)
+			{return "Error while connecting to the database for deleting."; }
+			
+			// create a prepared statement
+			String query = "delete from Bill where billID=?";
+			
+			PreparedStatement preparedStmt = con.prepareStatement(query);
+			
+			// binding values
+			preparedStmt.setString(1, billID);
+			
+			// execute the statement
+			preparedStmt.execute();
+			con.close();
+			
+			output = "Deleted successfully";
+		}
+		catch (Exception e)
+		{
+			output = "Error while deleting the bill.";
+			System.err.println(e.getMessage());
+		}
+		
+		return output;
+	}
 }
