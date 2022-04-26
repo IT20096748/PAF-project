@@ -203,4 +203,55 @@ public class ElectricityBill {
 		
 		return output;
 	}
+	
+	//update bill
+	public String updateBill(String billID, String monthStartedUnitsAmount, String monthEndedUnitsAmount)
+	{
+		String output = "";
+		
+		try
+		{
+			con = DBconfig.getConnection();
+			
+			if (con == null)
+			{return "Error while connecting to the database for updating."; }
+			
+			int endedUnits =Integer.parseInt(monthEndedUnitsAmount);
+			int startedUnits = Integer.parseInt(monthStartedUnitsAmount);
+			int unitsConsumed = endedUnits - startedUnits;
+			
+			double chargeForUnitsconsumed = BillDButil.ChargeCalculator(unitsConsumed);
+			
+			double fixedCharge = BillDButil.FixedCharge();
+			
+			double totalCostOfSupply = chargeForUnitsconsumed + fixedCharge;
+			
+			
+			// create a prepared statement
+			String query = "UPDATE Bill SET unitsConsumed=?,chargeForUnitsconsumed=?,totalCostOfSupply=?,startedUnits=?,endedUnits=? WHERE billID=?";
+			
+			PreparedStatement preparedStmt = con.prepareStatement(query);
+			
+			// binding values
+			preparedStmt.setInt(1, unitsConsumed);
+			preparedStmt.setDouble(2, chargeForUnitsconsumed);
+			preparedStmt.setDouble(3, totalCostOfSupply);
+			preparedStmt.setInt(4, startedUnits);
+			preparedStmt.setInt(5, endedUnits);
+			preparedStmt.setString(6, billID);
+			
+			// execute the statement
+			preparedStmt.execute();
+			con.close();
+			
+			output = "Updated successfully";
+		}
+		catch (Exception e)
+		{
+			output = "Error while updating the bill.";
+			System.err.println(e.getMessage());
+		}
+		
+		return output;
+	}
 }
