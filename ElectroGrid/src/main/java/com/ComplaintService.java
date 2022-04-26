@@ -44,6 +44,26 @@ Complaint cObj = new Complaint();
 		return output;
 	}
 
+	@PUT
+	@Path("/")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.TEXT_PLAIN)
+	public String updateComplaint(String complaintData)
+	{
+		//Convert the input string to a JSON object
+		JsonObject cObject = new JsonParser().parse(complaintData).getAsJsonObject();
+		
+		//Read the values from the JSON object
+		String cID = cObject.get("cID").getAsString();
+		String type = cObject.get("type").getAsString();
+		String cdesc = cObject.get("cdesc").getAsString();
+		
+		
+		String output = cObj.updateComplaint(cID,type,cdesc);
+		
+		return output;
+	}
+
 	
 	
 
