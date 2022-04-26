@@ -131,5 +131,42 @@ public class Complaint {
 		
 		return output;
 	}
+	public String updateComplaint(String cID,String type,String cdesc)
+	{
+		String output = "";
+		
+		try
+		{
+			Connection con = connect();
+			
+			if (con == null)
+			{return "Error while connecting to the database for updating."; }
+			
+			// create a prepared statement
+			String query = "UPDATE complaint SET type=?, cdesc=? WHERE cID=?";
+			
+			PreparedStatement preparedStmt = con.prepareStatement(query);
+			
+			// binding values
+			
+			preparedStmt.setString(1, type);
+			preparedStmt.setString(2, cdesc);
+			preparedStmt.setString(3, cID);
+			
+			
+			// execute the statement
+			preparedStmt.execute();
+			con.close();
+			
+			output = "Updated successfully";
+		}
+		catch (Exception e)
+		{
+			output = "Error while updating the complaint.";
+			System.err.println(e.getMessage());
+		}
+		
+		return output;
+	}
 	
 }
