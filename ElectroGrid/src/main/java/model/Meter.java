@@ -1,6 +1,10 @@
 package model;
 
 import java.sql.*;
+import java.util.HashMap;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 public class Meter {
 	
@@ -102,6 +106,68 @@ Connection con = null;
 		catch (Exception e)
 		{
 			output = "Error while reading the items.";
+			System.err.println(e.getMessage());
+		}
+		
+		return output;
+	}
+	
+	//get meter details as JSON format
+	public String getMeter(String ID)
+	{
+		String output = "";
+		
+		try
+		{
+				con = DBconfig.getConnection();
+				
+				if (con == null)
+				{return "Error while connecting to the database for reading."; }
+	
+				
+				// create a prepared statement
+				String query = "select * from Meter WHERE meterID=?";
+				
+				PreparedStatement preparedStmt = con.prepareStatement(query);
+				
+				// binding values
+				preparedStmt.setInt(1, Integer.parseInt(ID));
+				
+				// execute the statement
+				ResultSet rs = preparedStmt.executeQuery();
+				
+				// create hashMap object
+				HashMap<String, String> mete = new HashMap<String, String>();
+				
+				// iterate through the rows in the result set
+				while (rs.next())
+				{
+					String meterID = Integer.toString(rs.getInt("meterID"));
+					String meterCode = rs.getString("meterCode");
+					String premisesID = rs.getString("premisesID");
+					String electricityAccountNo = Integer.toString(rs.getInt("electricityAccountNo"));
+					String manufactureDate = rs.getString("manufactureDate");
+					
+					mete.put("meterID", meterID);
+					mete.put("meterCode", meterCode);
+					mete.put("premisesID", premisesID);
+					mete.put("electricityAccountNo", electricityAccountNo);
+					mete.put("manufactureDate", manufactureDate);					
+			
+				}
+				
+				con.close();
+				
+				//convert hashmap to json using gson
+				Gson gson = new GsonBuilder().disableHtmlEscaping().create();
+				String jsonString = gson.toJson(mete);
+				
+				// Complete the html table
+				output = jsonString;
+		}
+		catch (Exception e)
+		{
+			output = "Error while reading the payment.";
 			System.err.println(e.getMessage());
 		}
 		
