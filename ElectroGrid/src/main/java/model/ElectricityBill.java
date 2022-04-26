@@ -141,4 +141,66 @@ public class ElectricityBill {
 		
 		return output;
 	}
+	
+	//View one bill
+	public String viewBill(String accountNo, String mont, String city, String firstName)
+	{
+		System.out.println(accountNo);
+		System.out.println(mont);
+		System.out.println(city);
+		String output = "";
+		
+		try
+		{
+				con = DBconfig.getConnection();
+				
+				if (con == null)
+				{return "Error while connecting to the database for reading."; }
+	
+				
+				// create a prepared statement
+				String query = "select * from Bill WHERE electricityAccountNo=? and month=?";
+				
+				PreparedStatement preparedStmt = con.prepareStatement(query);
+				
+				// binding values
+				preparedStmt.setInt(1, Integer.parseInt(accountNo));
+				preparedStmt.setString(2, mont);
+				
+				
+				// execute the statement
+				ResultSet rs = preparedStmt.executeQuery();
+				
+				
+				// iterate through the rows in the result set
+				while (rs.next())
+				{
+					String electricityAccountNo = rs.getString("electricityAccountNo");
+					String month = rs.getString("month");
+					String issuedDate = rs.getString("issuedDate");
+					String unitsConsumed = Integer.toString(rs.getInt("unitsConsumed"));
+					String chargeForUnitsconsumed = Double.toString(rs.getDouble("chargeForUnitsconsumed"));
+					String fixedCharg = Double.toString(rs.getDouble("fixedCharge"));
+					String totalCostOfSupply = Double.toString(rs.getDouble("totalCostOfSupply"));
+					String startedUnits = Integer.toString(rs.getInt("startedUnits"));
+					String endedUnits = Integer.toString(rs.getInt("endedUnits"));
+					String status = rs.getString("status");
+					
+					output = BillDButil.BillDesign(month, issuedDate, city, firstName, electricityAccountNo, startedUnits, endedUnits, unitsConsumed, chargeForUnitsconsumed, fixedCharg, totalCostOfSupply, status);
+					                       
+				}
+				
+				con.close();
+				
+				// Complete the html table
+				
+		}
+		catch (Exception e)
+		{
+			output = "Error while reading the bill.";
+			System.err.println(e.getMessage());
+		}
+		
+		return output;
+	}
 }
