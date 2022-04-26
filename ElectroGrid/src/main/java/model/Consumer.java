@@ -1,5 +1,9 @@
 package model;
 import java.sql.*;
+import java.util.HashMap;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 /**
  * @author Nimesha
@@ -238,6 +242,83 @@ public String deleteConsumer(String accountNo)
 	catch (Exception e)
 	{
 		output = "Error while deleting the Consumer.";
+		System.err.println(e.getMessage());
+	}
+	
+	return output;
+}
+
+
+public String getConsumer(String accountNum)
+{
+	String output = "";
+	
+	try
+	{
+			Connection con = connect();
+			
+			if (con == null)
+			{return "Error while connecting to the database for reading."; }
+
+			
+			// create a prepared statement
+			String query = "select * from consumer WHERE accountNo=?";
+			
+			PreparedStatement preparedStmt = con.prepareStatement(query);
+			
+			// binding values
+			preparedStmt.setInt(1, Integer.parseInt(accountNum));
+			
+			// execute the statement
+			ResultSet rs = preparedStmt.executeQuery();
+			
+			// create hashMap object
+			HashMap<String, String> mete = new HashMap<String, String>();
+			
+			// iterate through the rows in the result set
+			while (rs.next())
+			{
+				
+				String consumerNo  = Integer.toString(rs.getInt("consumerNo"));
+				String accountNo = Integer.toString(rs.getInt("accountNo"));
+				String firstName = rs.getString("firstName");
+				String lastName = rs.getString("lastName");
+				String gender = rs.getString("gender");
+				String phoneNumber = rs.getString("phoneNumber");
+				String email = rs.getString("email");
+				String password = rs.getString("password");
+				String province = rs.getString("province");
+				String city  = rs.getString("city");
+				String street = rs.getString("street");
+				String postalCode = Double.toString(rs.getDouble("postalCode"));
+				
+				mete.put("consumerNo", consumerNo);
+				mete.put("accountNo", accountNo);
+				mete.put("firstName", firstName);
+				mete.put("lastName", lastName);
+				mete.put("gender", gender);	
+				mete.put("phoneNumber", phoneNumber);	
+				mete.put("email", email);	
+				mete.put("password", password);	
+				mete.put("province", province);	
+				mete.put("city", city);	
+				mete.put("street", street);	
+				mete.put("postalCode", postalCode);	
+		
+			}
+			
+			con.close();
+			
+			//convert hashmap to json using gson
+			Gson gson = new GsonBuilder().disableHtmlEscaping().create();
+			String jsonString = gson.toJson(mete);
+			
+			// Complete the html table
+			output = jsonString;
+	}
+	catch (Exception e)
+	{
+		output = "Error while reading the consumer.";
 		System.err.println(e.getMessage());
 	}
 	

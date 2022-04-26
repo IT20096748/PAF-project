@@ -55,8 +55,8 @@ public class Complaint {
 			
 			// binding values
 			
-			preparedStmt.setString(1,cID);
-			preparedStmt.setString(2,type);
+			preparedStmt.setString(1, cID);
+			preparedStmt.setString(2, type);
 			preparedStmt.setString(3, cdesc);
 			
 			// execute the statement
