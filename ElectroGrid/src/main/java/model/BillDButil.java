@@ -11,29 +11,29 @@ public class BillDButil {
 	    {
 	        amt += units * 5.40;
 	    }
-	    if(units > 50 && units <= 100)
+		else if(units > 50 && units <= 100)
 	    {
-	        amt += ((units-50) * 7.50);
+	        amt += 270 + ((units-50) * 7.50);
 	    }
-	    if(units > 100 && units <= 150)
+		else if(units > 100 && units <= 150)
 	    {
-	        amt += ((units-100) * 10.60);
+	        amt += 645 + ((units-100) * 10.60);
 	    }
-	    if(units > 150 && units <= 200)
+		else if(units > 150 && units <= 200)
 	    {
-	        amt += ((units-150) * 20.30);
+	        amt += 5240 + ((units-150) * 20.30);
 	    }
-	    if(units > 200 && units <= 250)
+		else if(units > 200 && units <= 250)
 	    {
-	        amt += ((units-200) * 25.20);
+	        amt += 6255 + ((units-200) * 25.20);
 	    }
-	    if(units > 250 && units <= 300)
+		else if(units > 250 && units <= 300)
 	    {
-	        amt += ((units-250) * 35.80);
+	        amt += 7515 + ((units-250) * 35.80);
 	    }
-	    if(units > 300)
+		else if(units > 300)
 	    {
-	    	amt += ((units-300) * 40.78);
+	    	amt += 9305 + ((units-300) * 40.78);
 	    }
 		
 		return amt;
@@ -41,7 +41,7 @@ public class BillDButil {
 	}
 	
 	
-public static String TariffBlockDesign(int units){
+	public static String TariffBlockDesign(int units){
 		
 		String output = "";
 		
@@ -49,29 +49,29 @@ public static String TariffBlockDesign(int units){
 	    {
 	       output += "<td>1 - 50</td>";
 	    }
-	    if(units > 50 && units <= 100)
+		else if(units > 50 && units <= 100)
 	    {
-	    	output += "<td>51 - 100</td>";
+	    	output += "<td>1 - 50</td><td>51 - 100</td>";
 	    }
-	    if(units > 100 && units <= 150)
+		else if(units > 100 && units <= 150)
 	    {
-	    	output += "<td>101 - 150</td>";
+	    	output += "<td>1 - 50</td><td>51 - 100</td><td>101 - 150</td>";
 	    }
-	    if(units > 150 && units <= 200)
+		else if(units > 150 && units <= 200)
 	    {
-	    	output += "<td>151 - 200</td>";
+	    	output += "<td>1 - 50</td><td>51 - 100</td><td>101 - 150</td><td>151 - 200</td>";
 	    }
-	    if(units > 200 && units <= 250)
+		else if(units > 200 && units <= 250)
 	    {
-	    	output += "<td>201 - 250</td>";
+	    	output += "<td>1 - 50</td><td>51 - 100</td><td>101 - 150</td><td>151 - 200</td><td>201 - 250</td>";
 	    }
-	    if(units > 250 && units <= 300)
+		else if(units > 250 && units <= 300)
 	    {
-	    	output += "<td>251 - 300</td>";
+	    	output += "<td>1 - 50</td><td>51 - 100</td><td>101 - 150</td><td>151 - 200</td><td>201 - 250</td><td>251 - 300</td>";
 	    }
-	    if(units > 300)
+		else if(units > 300)
 	    {
-	    	output += "<td>300 < </td>";
+	    	output += "<td>1 - 50</td><td>51 - 100</td><td>101 - 150</td><td>151 - 200</td><td>201 - 250</td><td>251 - 300</td><td>300 < </td>";
 	    }
 		
 		return output;
@@ -127,27 +127,27 @@ public static String TariffBlockDesign(int units){
 	    }
 	    if(units > 50 && units <= 100)
 	    {
-	    	output += "<td>7.50</td>";
+	    	output += "<td>5.40</td><td>7.50</td>";
 	    }
 	    if(units > 100 && units <= 150)
 	    {
-	    	output += "<td>10.60</td>";
+	    	output += "<td>5.40</td><td>7.50</td><td>10.60</td>";
 	    }
 	    if(units > 150 && units <= 200)
 	    {
-	    	output += "<td>20.30</td>";
+	    	output += "<td>5.40</td><td>7.50</td><td>10.60</td><td>20.30</td>";
 	    }
 	    if(units > 200 && units <= 250)
 	    {
-	    	output += "<td>25.20</td>";
+	    	output += "<td>5.40</td><td>7.50</td><td>10.60</td><td>20.30</td><td>25.20</td>";
 	    }
 	    if(units > 250 && units <= 300)
 	    {
-	    	output += "<td>35.80</td>";
+	    	output += "<td>5.40</td><td>7.50</td><td>10.60</td><td>20.30</td><td>25.20</td><td>35.80</td>";
 	    }
 	    if(units > 300)
 	    {
-	    	output += "<td>40.78</td>";
+	    	output += "<td>5.40</td><td>7.50</td><td>10.60</td><td>20.30</td><td>25.20</td><td>35.80</td><td>40.78</td>";
 	    }
 		
 		return output;
@@ -165,27 +165,27 @@ public static String TariffBlockDesign(int units){
 	    }
 	    if(units > 50 && units <= 100)
 	    {
-	        output += "<td>"+ ((units-50) * 7.50) +"</td>";
+	        output += "<td>270.0</td><td>"+ ((units-50) * 7.50) +"</td>";
 	    }
 	    if(units > 100 && units <= 150)
 	    {
-	        output += "<td>"+ ((units-100) * 10.60) +"</td>";
+	        output += "<td>270.0</td><td>645.0</td><td>"+ ((units-100) * 10.60) +"</td>";
 	    }
 	    if(units > 150 && units <= 200)
 	    {
-	        output += "<td>"+ ((units-150) * 20.30) +"</td>";
+	        output += "<td>270.0</td><td>645.0</td><td>5240.0</td><td>"+ ((units-150) * 20.30) +"</td>";
 	    }
 	    if(units > 200 && units <= 250)
 	    {
-	        output += "<td>"+ ((units-200) * 25.20) +"</td>";
+	        output += "<td>270.0</td><td>645.0</td><td>5240.0</td><td>6255.0</td><td>"+ ((units-200) * 25.20) +"</td>";
 	    }
 	    if(units > 250 && units <= 300)
 	    {
-	    	output += "<td>"+ ((units-250) * 35.80) +"</td>";
+	    	output += "<td>270.0</td><td>645.0</td><td>5240.0</td><td>6255.0</td><td>7515.0</td><td>"+ ((units-250) * 35.80) +"</td>";
 	    }
 	    if(units > 300)
 	    {
-	    	output += "<td>"+ ((units-300) * 40.78) +"</td>";
+	    	output += "<td>270.0</td><td>645.0</td><td>5240.0</td><td>6255.0</td><td>7515.0</td><td>9305.0</td><td>"+ ((units-300) * 40.78) +"</td>";
 	    }
 		
 		return output;

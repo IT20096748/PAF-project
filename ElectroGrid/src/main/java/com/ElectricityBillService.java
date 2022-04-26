@@ -25,7 +25,7 @@ import model.ElectricityBill;
 @Path("/Bills")
 public class ElectricityBillService {
 
-ElectricityBill billObj = new ElectricityBill();
+	ElectricityBill billObj = new ElectricityBill();
 	
 	@GET
 	@Path("/View-All")
@@ -47,7 +47,7 @@ ElectricityBill billObj = new ElectricityBill();
 		
 		//client api for inter service communication Getting consumer details
 		Client c = Client.create();
-		WebResource resource = c.resource("http://localhost:8080/Lab6Rest/ConsumerService/Consumers/Get/" + accountNo);
+		WebResource resource = c.resource("http://localhost:8080/ElectroGrid/ConsumerService/Consumers/Get/" + accountNo);
 		String consumerDetails = resource.get(String.class);
 		
 		//extract consumer details from json object
@@ -70,7 +70,7 @@ ElectricityBill billObj = new ElectricityBill();
 
 		//client api for inter service communication Getting meter details
 		Client c = Client.create();
-		WebResource resource = c.resource("http://localhost:8080/Lab6Rest/MeterService/Meters/Get/" + meterID);
+		WebResource resource = c.resource("http://localhost:8080/ElectroGrid/MeterService/Meters/Get/" + meterID);
 		String meterDetails = resource.get(String.class);
 		
 		//extract meter details from json object
