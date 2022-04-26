@@ -32,7 +32,17 @@ Complaint cObj = new Complaint();
 
 		return cObj.readComplaints();
 	}
-	
+	@POST
+	@Path("/")
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	@Produces(MediaType.TEXT_PLAIN)
+	public String insertItem(@FormParam("cID") String cID,
+							 @FormParam("type") String type,
+							 @FormParam("cdesc") String cdesc)
+	{
+		String output = cObj.insertComplaint(cID, type, cdesc);
+		return output;
+	}
 
 	
 	
