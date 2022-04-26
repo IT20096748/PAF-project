@@ -26,5 +26,11 @@
 <servlet-name>Jersey Web Application</servlet-name>
 <url-pattern>/EmployeeService/*</url-pattern>
 </servlet-mapping>
+
+
+<servlet-mapping>
+<servlet-name>Jersey Web Application</servlet-name>
+<url-pattern>/ComplaintService/*</url-pattern>
+</servlet-mapping>
 </web-app>
   
