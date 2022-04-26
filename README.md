@@ -9,4 +9,4 @@ java JAX-RS(jersy) Restful web service on Apache Tomcat mysql as the database an
 Import the electro_grid database, then clone the project and after it become cloned by using apache tomcat server the project can be executed.
 
 # How to set the path?
-http://localhost:8010/ElectroGrid/InterruptService/Interrupts/
+http://localhost:8010/ElectroGrid/InterruptService/Interrupts/ -- for Interrupt Function
