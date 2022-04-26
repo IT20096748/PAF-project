@@ -2,7 +2,7 @@ package model;
 
 import java.sql.*;
 
-public class Payment {
+public class Pay {
 	
 Connection con = null;
 	
